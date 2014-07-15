@@ -1,0 +1,23 @@
+---
+# file: tasks/controller.yml
+
+- name: Prepare controller
+  npm: name=cozy-controller global=yes
+
+- name: Create directories
+  file: path=/etc/cozy/pids state=directory
+
+- name: Configure Cozy controller
+  template: src=controller.token.j2 dest=/etc/cozy/controller.token owner=cozy-home mode=0700
+
+- name: Copy Supervisor file for Cozy controller
+  copy: src=cozy-controller.conf dest=/etc/supervisor/conf.d/cozy-controller.conf owner=root mode=0755
+  notify: Restart Cozy controller
+
+- name: Check if Cozy-controller is properly running
+  uri: url=http://127.0.0.1:9002/
+  register: controller_message
+  failed_when: '"Wrong auth token" != (controller_message.content|from_json).error'
+
+# TODO: Add support for monit
+# TODO: Add possibility to change NODE_ENV var in init file

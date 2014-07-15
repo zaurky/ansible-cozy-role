@@ -1,0 +1,11 @@
+---
+# file: tasks/users.yml
+
+- name: Add Cozy user
+  user: name=cozy createhome=no
+
+- name: Add Cozy-data-system user
+  user: name=cozy-data-system
+
+- name: Add Cozy-home user
+  user: name=cozy-home

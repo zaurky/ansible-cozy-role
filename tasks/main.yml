@@ -1,0 +1,65 @@
+---
+# file: tasks/main.yml
+
+- name: Update Apt cache
+  apt: update_cache=yes
+
+- name: Update Apt packages, safe mode
+  apt: upgrade=safe
+
+- name: Install common packages
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - build-essential
+    - vim
+    - curl
+    - rsync
+    - wget
+    - htop
+    - iftop
+    - iotop
+    - zsh
+    - git
+
+- name: Install tools
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python
+    - python-dev
+    - python-setuptools
+    - python-pip
+    - openssl
+    - libssl-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - build-essential
+    - git
+    - sudo
+    - lsb-release
+    - imagemagick
+    - sqlite3
+    - supervisor
+
+- include: users.yml
+
+- name: Install packages
+  npm: name={{ item }} global=yes
+  with_items:
+    - coffee-script
+    - cozy-monitor
+
+- name: Install Brunch package
+  npm: name=brunch global=yes version=1.6.3
+
+- include: controller.yml tags=cozy-controller
+- include: indexer.yml tags=cozy-indexer
+
+- name: Install data-system, home, proxy
+  command: cozy-monitor install {{ item }}
+  sudo: true
+  with_items:
+    - data-system
+    - home
+    - proxy
+
+# - name: Install nginx ...

@@ -1,0 +1,13 @@
+---
+# file: vars/defaults.yml
+
+cozy_token: 'MySecretCozyCloudToken'
+
+nginx_sites:
+  - server:
+    name: cozy
+    listen: 80
+    server_name: localhost
+    location1:
+      name: /
+      proxy_pass: http://127.0.0.1:9104

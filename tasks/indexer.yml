@@ -1,0 +1,24 @@
+---
+# file: tasks/indexer.yml
+
+- name: Install Virtualenv
+  apt: pkg=python-virtualenv state=latest force=yes
+
+- name: Create Cozy-indexer home
+  file: path=/usr/local/cozy-indexer state=directory owner=cozy group=cozy
+
+- name: Clone git Cozy data indexer repo
+  git: repo=https://github.com/mycozycloud/cozy-data-indexer.git dest=/usr/local/cozy-indexer/cozy-data-indexer
+
+- name: Install requirements
+  pip: requirements=/usr/local/cozy-indexer/cozy-data-indexer/requirements/common.txt virtualenv=/usr/local/cozy-indexer/cozy-data-indexer/virtualenv
+
+- name: Update Cozy directory rights
+  file: path=/usr/local/cozy-indexer state=directory owner=cozy group=cozy recurse=yes
+
+- name: Copy Supervisor file for Cozy indexer
+  copy: src=cozy-indexer.conf dest=/etc/supervisor/conf.d/cozy-indexer.conf owner=root mode=0755
+  notify: Restart Cozy indexer
+
+- name: Check if Cozy-indexer is properly running
+  uri: url=http://127.0.0.1:9102/
