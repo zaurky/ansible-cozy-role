@@ -20,6 +20,7 @@
     - iotop
     - zsh
     - git
+    - nginx
 
 - name: Install tools
   apt: pkg={{ item }} state=latest
@@ -63,4 +64,4 @@
     - home
     - proxy
 
-# - name: Install nginx ...
+- include: nginx.yml tags=cozy-nginx

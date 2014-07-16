@@ -6,3 +6,6 @@
 
 - name: Restart Cozy indexer
   supervisorctl: name=cozy-indexer state=restarted
+
+- name: Restart nginx
+  service: name=nginx state=restarted
