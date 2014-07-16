@@ -20,5 +20,7 @@
   copy: src=cozy-indexer.conf dest=/etc/supervisor/conf.d/cozy-indexer.conf owner=root mode=0755
   notify: Restart Cozy indexer
 
+- include: supervisor_restart.yml tags=restart-supervisor
+
 - name: Check if Cozy-indexer is properly running
   uri: url=http://127.0.0.1:9102/

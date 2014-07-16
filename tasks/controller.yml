@@ -14,6 +14,8 @@
   copy: src=cozy-controller.conf dest=/etc/supervisor/conf.d/cozy-controller.conf owner=root mode=0755
   notify: Restart Cozy controller
 
+- include: supervisor_restart.yml tags=restart-supervisor
+
 - name: Check if Cozy-controller is properly running
   uri: url=http://127.0.0.1:9002/
   register: controller_message

@@ -1,0 +1,11 @@
+---
+# file: tasks/supervisor_restart.yml
+
+- name: Stop supervisord
+  shell: service supervisor force-stop || echo
+
+- name: Kill supervisord
+  shell: pkill supervisor || echo
+
+- name: Start supervisord
+  shell: service supervisor start
