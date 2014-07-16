@@ -53,6 +53,7 @@
 
 - include: controller.yml tags=cozy-controller
 - include: indexer.yml tags=cozy-indexer
+- include: couchdb.yml tags=cozy-couchdb
 
 - name: Install data-system, home, proxy
   command: cozy-monitor install {{ item }}
