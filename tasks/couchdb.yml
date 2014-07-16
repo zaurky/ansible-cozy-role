@@ -1,0 +1,8 @@
+---
+# file: tasks/couchdb.yml
+
+- name: Prepare cozy conf file to login
+  template: src=couchdb.login.j2 dest=/etc/cozy/couchdb.login owner=cozy-data-system group=cozy-data-system mode=0700
+
+- name: Set the credentials in couchdb
+  command: curl -X PUT http://127.0.0.1:5984/_config/admins/{{ couch_login }} -d '"{{ couch_password }}"'
