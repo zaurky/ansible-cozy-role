@@ -3,6 +3,9 @@
 
 cozy_token: 'MySecretCozyCloudToken'
 
+couch_login: 'MySecretLogin'
+couch_password: 'MySecretPassword'
+
 nginx_sites:
   - server:
     name: cozy
